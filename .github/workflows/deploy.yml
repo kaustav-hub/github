@@ -3,9 +3,9 @@ on:
   push:
     branches:
       - main
+    path_ignore:
+      - '.github/workflows/*'
   workflow_dispatch:
-  path_ignore:
-    - .github/workflows/*
 jobs:
   test:
     runs-on: ubuntu-latest
