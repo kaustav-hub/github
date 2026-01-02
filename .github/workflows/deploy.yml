@@ -4,6 +4,8 @@ on:
     branches:
       - main
   workflow_dispatch:
+  path_ignore:
+    - .github/workflows/*
 jobs:
   test:
     runs-on: ubuntu-latest
