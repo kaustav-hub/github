@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    outputs:
+      js-files: ${{ steps.publish-js-files.outputs.js-files 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -18,13 +20,29 @@ jobs:
         run: npm run lint
       - name: Run tests
         run: npm run test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Install dependencies
+        run: npm ci
       - name: Build project
         run: npm run build
-      - name: Upload build artifacts
+      - name: Publish JS filenames
+        id: publish-js-files
+        run: |
+          find dist/ -name "*.js" -exec echo 'js-files={}' >> $GITHUB_OUTPUT '\;'
+      - name: upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: dist/
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:    
       - name: download build artifacts
         uses: actions/download-artifact@v4
         with:
