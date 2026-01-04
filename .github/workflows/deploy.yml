@@ -50,6 +50,6 @@ jobs:
       - name: Display build files
         run: ls -la
       - name: Output JS files
-        run: echo "JS Files: ${{ needs.build.outputs.js-files }}"
+        run: echo  "${{ needs.build.outputs.js-files }}"
       - name: Deploy application
         run: echo "Deploying application..."
