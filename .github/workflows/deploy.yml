@@ -9,8 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    outputs:
-      js-files: ${{ steps.publish-js-files.outputs.js-files }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -23,6 +21,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      js-files: ${{ steps.publish-js-files.outputs.js-files }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -33,7 +33,7 @@ jobs:
       - name: Publish JS filenames
         id: publish-js-files
         run: |
-          find dist/ -name "*.js" -exec echo 'js-files={}' >> $GITHUB_OUTPUT '\;'
+          find dist/ -name "*.js" -exec sh -c 'echo "js-files=$1" >> $GITHUB_OUTPUT' _ {} \;
       - name: upload build artifacts
         uses: actions/upload-artifact@v4
         with:
