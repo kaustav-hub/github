@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     outputs:
-      js-files: ${{ steps.publish-js-files.outputs.js-files 
+      js-files: ${{ steps.publish-js-files.outputs.js-files }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
