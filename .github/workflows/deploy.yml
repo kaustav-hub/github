@@ -48,6 +48,6 @@ jobs:
         with:
           name: build-artifacts
       - name: Display build files
-        run: ls -la dist/
+        run: ls -la
       - name: Deploy application
         run: echo "Deploying application..."
