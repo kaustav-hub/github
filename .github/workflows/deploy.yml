@@ -28,7 +28,7 @@ jobs:
         if: failure() || steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
+          name: test-report
           path: test.json
   build:
     needs: test
