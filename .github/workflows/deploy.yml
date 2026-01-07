@@ -1,15 +1,15 @@
 name: Workflow for Deployments
 on:
-#  push:
-#    branches:
-#      - main
-#    paths-ignore:
-#      - '.github/workflows/output.yml'
-#      - '.github/workflows/deploy.yml'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/workflows/output.yml'
   workflow_dispatch:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    container: node:18
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -26,6 +26,7 @@ jobs:
         run: npm run lint
   test:
     runs-on: ubuntu-latest
+    container: node:18
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -50,6 +51,7 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    container: node:18
     outputs:
       js-files: ${{ steps.publish-js-files.outputs.js-files }}
     steps:
@@ -78,6 +80,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    container: node:18
     steps:    
       - name: download build artifacts
         uses: actions/download-artifact@v4
